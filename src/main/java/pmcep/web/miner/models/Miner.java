@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import pmcep.miners.type.AbstractMiner;
 import pmcep.web.annotations.ExposedMiner;
 import pmcep.web.annotations.ExposedMinerParameter;
 
@@ -18,7 +19,7 @@ public class Miner {
 	private String id;
 	@Getter
 	@JsonIgnore
-	private Class<?> clazz;
+	private Class<AbstractMiner> minerClass;
 	@Getter
 	private String name;
 	@Getter
@@ -30,9 +31,9 @@ public class Miner {
 	@EqualsAndHashCode.Exclude
 	private Set<MinerParameter> viewParameters;
 	
-	public Miner(ExposedMiner annotation, Class<?> clazz) {
+	public Miner(ExposedMiner annotation, Class<AbstractMiner> clazz) {
 		this.id = UUID.randomUUID().toString();
-		this.clazz = clazz;
+		this.minerClass = clazz;
 		this.name = annotation.name();
 		this.description = annotation.description();
 		this.configurationParameters = new HashSet<MinerParameter>();

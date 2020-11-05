@@ -1,13 +1,12 @@
-swagger: "2.0" 
-info: 
-  description: "" 
-  version: "0.0.1" 
-  title: "OML framework" 
-  termsOfService: "http://swagger.io/terms/" 
-host: "localhost" 
-basePath: "/api/v1" 
-schemes: 
-- "http" 
+swagger: "2.0"
+info:
+  description: ""
+  version: "0.0.1"
+  title: "OML framework"
+host: "localhost:8080"
+basePath: "/api/v1"
+schemes:
+- "http"
 paths: 
   /miners: 
     get: 
@@ -192,6 +191,9 @@ definitions:
       id: 
         type: "string" 
         description: "A unique id of the miner"
+      name:
+         type: "string"
+         description: "The name of the miner"
       description:
         type: "string"
         description: "A description of the capabilities of the miner"

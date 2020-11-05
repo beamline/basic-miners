@@ -4,16 +4,16 @@ import lombok.Getter;
 
 public class MinerParameter {
 
-	public enum TypeEnum {
+	public enum Type {
 		STRING, INTEGER, DOUBLE;
 	}
 	
 	@Getter
 	private String name;
 	@Getter
-	private TypeEnum type;
+	private Type type;
 	
-	public MinerParameter(String name, TypeEnum type) {
+	public MinerParameter(String name, Type type) {
 		this.name = name;
 		this.type = type;
 	}

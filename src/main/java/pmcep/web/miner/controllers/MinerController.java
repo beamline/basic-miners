@@ -31,7 +31,8 @@ public class MinerController {
 		for (Class<?> clazz : reflections.getTypesAnnotatedWith(ExposedMiner.class)) {
 			if (minerSuperClazz.isAssignableFrom(clazz)) {
 				ExposedMiner em = clazz.getAnnotation(ExposedMiner.class);
-				Miner m = new Miner(em, clazz);
+				@SuppressWarnings("unchecked")
+				Miner m = new Miner(em, (Class<AbstractMiner>) clazz);
 				miners.put(m.getId(), m);
 			} else {
 				Logger.instance().debug("Class " + clazz + " annotated identified but missed proper inheritance (" + minerSuperClazz.getCanonicalName() + ")");

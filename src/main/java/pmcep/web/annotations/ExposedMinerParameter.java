@@ -13,5 +13,5 @@ import pmcep.web.miner.models.MinerParameter;
 
 public @interface ExposedMinerParameter {
 	String name();
-	MinerParameter.TypeEnum type();
+	MinerParameter.Type type();
 }
