@@ -29,8 +29,6 @@ public class DummyMiner2 extends AbstractMiner {
 
 	@Override
 	public MinerView getView(Collection<MinerParameterValue> collection) {
-		return null;
-		// TODO Auto-generated method stub
-		
+		return new MinerView("view 2", "test");
 	}
 }
