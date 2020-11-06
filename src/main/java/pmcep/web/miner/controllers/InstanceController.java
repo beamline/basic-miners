@@ -2,6 +2,7 @@ package pmcep.web.miner.controllers;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import pmcep.logger.Logger;
+import pmcep.miners.exceptions.MinerException;
 import pmcep.miners.type.AbstractMiner;
 import pmcep.web.miner.models.Miner;
 import pmcep.web.miner.models.MinerInstance;
 import pmcep.web.miner.models.MinerInstanceConfiguration;
+import pmcep.web.miner.models.MinerParameterValue;
+import pmcep.web.miner.models.MinerView;
 
 
 @RestController
@@ -46,6 +50,7 @@ public class InstanceController {
 		try {
 			Miner miner = minerController.getById(minerId);
 			Class<AbstractMiner> clazz = miner.getMinerClass();
+			
 			AbstractMiner minerObject = clazz.getDeclaredConstructor().newInstance();
 			minerObject.setStream(configuration.getStream());
 			minerObject.configure(configuration.getParameterValues());
@@ -60,5 +65,55 @@ public class InstanceController {
 		}
 		
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/instances/{instanceId}/start")
+	public ResponseEntity<Boolean> instanceStart(@PathVariable("instanceId") String instanceId) {
+		if (!instances.containsKey(instanceId)) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		try {
+			instances.get(instanceId).getMinerObject().start();
+		} catch (MinerException e) {
+			Logger.instance().error(e);
+			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		}
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+	}
+	
+	@GetMapping("/instances/{instanceId}/stop")
+	public ResponseEntity<Boolean> instanceStop(@PathVariable("instanceId") String instanceId) {
+		if (!instances.containsKey(instanceId)) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		try {
+			instances.get(instanceId).getMinerObject().stop();
+		} catch (MinerException e) {
+			Logger.instance().error(e);
+			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		}
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+	}
+	
+	@GetMapping("/instances/{instanceId}/status")
+	public ResponseEntity<Boolean> instanceStatus(@PathVariable("instanceId") String instanceId) {
+		if (!instances.containsKey(instanceId)) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return new ResponseEntity<Boolean>(instances.get(instanceId).getMinerObject().isRunnning(), HttpStatus.OK);
+	}
+	
+	@PostMapping(
+		value = "/instances/{instanceId}/view",
+		produces = { "application/json" })
+	public ResponseEntity<MinerView> instanceView(@PathVariable("instanceId") String instanceId, @RequestBody List<MinerParameterValue> configuration) {
+		if (!instances.containsKey(instanceId)) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return new ResponseEntity<MinerView>(instances.get(instanceId).getMinerObject().getView(configuration), HttpStatus.OK);
 	}
 }

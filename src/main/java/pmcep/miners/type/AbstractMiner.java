@@ -6,22 +6,23 @@ import lombok.Getter;
 import lombok.Setter;
 import pmcep.miners.exceptions.MinerException;
 import pmcep.web.miner.models.MinerParameterValue;
+import pmcep.web.miner.models.MinerView;
 import pmcep.web.miner.models.Stream;
 
 public abstract class AbstractMiner {
 
 	private boolean running = false;
-	private boolean configured = false;
+	private boolean configured = true;
 	@Getter @Setter
 	private Stream stream = null;
 	
 	public abstract void configure(Collection<MinerParameterValue> collection);
 	
-	public abstract void consumeEvent();
+	public abstract void consumeEvent(String caseID, String activityName);
 	
-	public abstract void getView();
+	public abstract MinerView getView(Collection<MinerParameterValue> collection);
 	
-	public void start(Stream stream) throws MinerException {
+	public void start() throws MinerException {
 		if (running) {
 			throw new MinerException("Miner instance already running");
 		}

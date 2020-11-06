@@ -4,23 +4,16 @@ import java.util.Collection;
 
 import pmcep.miners.type.AbstractMiner;
 import pmcep.web.annotations.ExposedMiner;
-import pmcep.web.annotations.ExposedMinerParameter;
-import pmcep.web.miner.models.MinerParameter.Type;
 import pmcep.web.miner.models.MinerParameterValue;
 import pmcep.web.miner.models.MinerView;
 
 @ExposedMiner(
-	name = "test miner",
+	name = "test miner 2",
 	description = "this is an empty miner used for testing",
-	configurationParameters = {
-		@ExposedMinerParameter(name = "test config string", type = Type.STRING),
-		@ExposedMinerParameter(name = "test config double", type = Type.DOUBLE)
-	},
-	viewParameters = {
-		@ExposedMinerParameter(name = "test view double", type = Type.DOUBLE),
-	}
+	configurationParameters = { },
+	viewParameters = { }
 )
-public class DummyMiner extends AbstractMiner {
+public class DummyMiner2 extends AbstractMiner {
 
 	@Override
 	public void configure(Collection<MinerParameterValue> collection) {
@@ -36,9 +29,8 @@ public class DummyMiner extends AbstractMiner {
 
 	@Override
 	public MinerView getView(Collection<MinerParameterValue> collection) {
-		return new MinerView("view 1", "test");
+		return null;
 		// TODO Auto-generated method stub
 		
 	}
-
 }
