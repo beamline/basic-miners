@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import org.reflections.Reflections;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import pmcep.web.miner.models.Miner;
 
 @RestController
 @RequestMapping("/api/v1/")
+@CrossOrigin
 public class MinerController {
 
 	private Map<String, Miner> miners = new HashMap<String, Miner>();
