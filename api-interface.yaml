@@ -222,6 +222,8 @@ definitions:
   MinerInstanceConfiguration:
     type: "object"
     properties:
+      name:
+        type: "string"
       stream:
         type: "object"
         $ref: "#/definitions/Stream"
