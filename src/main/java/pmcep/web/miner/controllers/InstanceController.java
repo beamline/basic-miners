@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -81,6 +82,16 @@ public class InstanceController {
 			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
 		}
 		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/instances/{instanceId}/delete")
+	public ResponseEntity<Void> instanceDelete(@PathVariable("instanceId") String instanceId) {
+		if (!instances.containsKey(instanceId)) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		instances.remove(instanceId);
+		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping("/instances/{instanceId}/stop")
