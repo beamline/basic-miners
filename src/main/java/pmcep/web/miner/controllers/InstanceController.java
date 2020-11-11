@@ -47,7 +47,6 @@ public class InstanceController {
 		if (!minerController.minerExists(minerId)) {
 			return ResponseEntity.notFound().build();
 		}
-		
 		// create an instance of the miner
 		try {
 			Miner miner = minerController.getById(minerId);
@@ -74,7 +73,6 @@ public class InstanceController {
 		if (!instances.containsKey(instanceId)) {
 			return ResponseEntity.notFound().build();
 		}
-		
 		try {
 			instances.get(instanceId).getMinerObject().start();
 		} catch (MinerException e) {
@@ -89,8 +87,11 @@ public class InstanceController {
 		if (!instances.containsKey(instanceId)) {
 			return ResponseEntity.notFound().build();
 		}
-		
-		instances.remove(instanceId);
+		try{
+			instances.remove(instanceId);
+		}catch (Exception e) {
+			Logger.instance().error(e);
+		}
 		return ResponseEntity.ok().build();
 	}
 	
