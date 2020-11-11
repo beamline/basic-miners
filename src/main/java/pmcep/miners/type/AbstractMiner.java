@@ -26,7 +26,7 @@ public abstract class AbstractMiner {
 	
 	public abstract MinerView getView(Collection<MinerParameterValue> collection);
 
-	public Collection<MinerParameter> getConfigurationParameter() {
+	public Collection<MinerParameter> getConfigurationParameters() {
 		ExposedMiner annotation = this.getClass().getAnnotation(ExposedMiner.class);
 		HashSet<MinerParameter> params = new HashSet<MinerParameter>();
 		for (ExposedMinerParameter p : annotation.configurationParameters()) {
@@ -35,7 +35,7 @@ public abstract class AbstractMiner {
 		return params;
 	}
 	
-	public Collection<MinerParameter> getViewParameter() {
+	public Collection<MinerParameter> getViewParameters() {
 		ExposedMiner annotation = this.getClass().getAnnotation(ExposedMiner.class);
 		HashSet<MinerParameter> params = new HashSet<MinerParameter>();
 		for (ExposedMinerParameter p : annotation.viewParameters()) {
