@@ -121,11 +121,11 @@ public class InstanceController {
 	@PostMapping(
 		value = "/instances/{instanceId}/view",
 		produces = { "application/json" })
-	public ResponseEntity<MinerView> instanceView(@PathVariable("instanceId") String instanceId, @RequestBody List<MinerParameterValue> configuration) {
+	public ResponseEntity<Collection<MinerView>> instanceView(@PathVariable("instanceId") String instanceId, @RequestBody List<MinerParameterValue> configuration) {
 		if (!instances.containsKey(instanceId)) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		return new ResponseEntity<MinerView>(instances.get(instanceId).getMinerObject().getView(configuration), HttpStatus.OK);
+		return new ResponseEntity<Collection<MinerView>>(instances.get(instanceId).getMinerObject().getViews(configuration), HttpStatus.OK);
 	}
 }

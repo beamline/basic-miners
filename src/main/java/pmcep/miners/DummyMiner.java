@@ -1,6 +1,8 @@
 package pmcep.miners;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import pmcep.miners.type.AbstractMiner;
 import pmcep.web.annotations.ExposedMiner;
@@ -17,7 +19,9 @@ import pmcep.web.miner.models.MinerView;
 		@ExposedMinerParameter(name = "test config double", type = Type.DOUBLE)
 	},
 	viewParameters = {
+		@ExposedMinerParameter(name = "test view string", type = Type.STRING),
 		@ExposedMinerParameter(name = "test view double", type = Type.DOUBLE),
+		@ExposedMinerParameter(name = "test view integer", type = Type.INTEGER),
 	}
 )
 public class DummyMiner extends AbstractMiner {
@@ -35,10 +39,12 @@ public class DummyMiner extends AbstractMiner {
 	}
 
 	@Override
-	public MinerView getView(Collection<MinerParameterValue> collection) {
-		return new MinerView("view 1", "test");
-		// TODO Auto-generated method stub
-		
+	public List<MinerView> getViews(Collection<MinerParameterValue> collection) {
+		List<MinerView> views = new ArrayList<>();
+		for (MinerParameterValue v : collection) {
+			views.add(new MinerView(v.getName(), "the value for " + v.getName() + " is " + v.getValue()));
+		}
+		return views;
 	}
 
 }

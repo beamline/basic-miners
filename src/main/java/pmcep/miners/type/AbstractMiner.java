@@ -2,6 +2,7 @@ package pmcep.miners.type;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +25,7 @@ public abstract class AbstractMiner {
 	
 	public abstract void consumeEvent(String caseID, String activityName);
 	
-	public abstract MinerView getView(Collection<MinerParameterValue> collection);
+	public abstract List<MinerView> getViews(Collection<MinerParameterValue> collection);
 
 	public Collection<MinerParameter> getConfigurationParameters() {
 		ExposedMiner annotation = this.getClass().getAnnotation(ExposedMiner.class);

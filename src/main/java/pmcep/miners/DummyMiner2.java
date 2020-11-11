@@ -1,6 +1,8 @@
 package pmcep.miners;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import pmcep.miners.type.AbstractMiner;
 import pmcep.web.annotations.ExposedMiner;
@@ -28,7 +30,11 @@ public class DummyMiner2 extends AbstractMiner {
 	}
 
 	@Override
-	public MinerView getView(Collection<MinerParameterValue> collection) {
-		return new MinerView("view 2", "test");
+	public List<MinerView> getViews(Collection<MinerParameterValue> collection) {
+		List<MinerView> views = new ArrayList<>();
+		views.add(new MinerView("view test miner 2.1", "test value 2.1"));
+		views.add(new MinerView("view test miner 2.2", "test value 2.2"));
+		views.add(new MinerView("view test miner 2.3", "test value 2.3"));
+		return views;
 	}
 }
