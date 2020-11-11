@@ -6,6 +6,9 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import mqttxes.lib.XesMqttConsumer;
+import mqttxes.lib.XesMqttEvent;
+import mqttxes.lib.XesMqttEventCallback;
 import pmcep.miners.exceptions.MinerException;
 import pmcep.web.annotations.ExposedMiner;
 import pmcep.web.annotations.ExposedMinerParameter;
@@ -20,6 +23,8 @@ public abstract class AbstractMiner {
 	private boolean configured = true;
 	@Getter @Setter
 	private Stream stream = null;
+
+	private XesMqttConsumer client;
 	
 	public abstract void configure(Collection<MinerParameterValue> collection);
 	
@@ -52,8 +57,15 @@ public abstract class AbstractMiner {
 		if (stream == null || !configured) {
 			throw new MinerException("Miner instance not yet configured");
 		}
-		// do something
-		// ...
+		this.client = new XesMqttConsumer(stream.getBrokerHost(), stream.getTopicBase());
+		client.subscribe(new XesMqttEventCallback() {
+			@Override
+			public void accept(XesMqttEvent e) {
+				consumeEvent(e.getCaseId(),e.getActivityName());
+			}
+		});
+
+		client.connect();
 		running = true;
 	}
 	
@@ -61,8 +73,7 @@ public abstract class AbstractMiner {
 		if (!running) {
 			throw new MinerException("Miner instance not running");
 		}
-		// do something
-		// ...
+		client.disconnect();
 		running = false;
 	}
 	
