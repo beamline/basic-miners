@@ -1,10 +1,14 @@
 package pmcep.miners.type;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 import lombok.Getter;
 import lombok.Setter;
 import pmcep.miners.exceptions.MinerException;
+import pmcep.web.annotations.ExposedMiner;
+import pmcep.web.annotations.ExposedMinerParameter;
+import pmcep.web.miner.models.MinerParameter;
 import pmcep.web.miner.models.MinerParameterValue;
 import pmcep.web.miner.models.MinerView;
 import pmcep.web.miner.models.Stream;
@@ -21,6 +25,24 @@ public abstract class AbstractMiner {
 	public abstract void consumeEvent(String caseID, String activityName);
 	
 	public abstract MinerView getView(Collection<MinerParameterValue> collection);
+
+	public Collection<MinerParameter> getConfigurationParameter() {
+		ExposedMiner annotation = this.getClass().getAnnotation(ExposedMiner.class);
+		HashSet<MinerParameter> params = new HashSet<MinerParameter>();
+		for (ExposedMinerParameter p : annotation.configurationParameters()) {
+			params.add(new MinerParameter(p.name(), p.type()));
+		}
+		return params;
+	}
+	
+	public Collection<MinerParameter> getViewParameter() {
+		ExposedMiner annotation = this.getClass().getAnnotation(ExposedMiner.class);
+		HashSet<MinerParameter> params = new HashSet<MinerParameter>();
+		for (ExposedMinerParameter p : annotation.viewParameters()) {
+			params.add(new MinerParameter(p.name(), p.type()));
+		}
+		return params;
+	}
 	
 	public void start() throws MinerException {
 		if (running) {
