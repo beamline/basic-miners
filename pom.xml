@@ -23,7 +23,7 @@
 		<repository>
 			<id>pmcep</id>
 			<name></name>
-			<url>https://dl.bintray.com/delas/pmcep/</url>
+			<url>https://dl.bintray.com/delas/org.deckfour</url>
 		</repository>
 	</repositories>
 	
