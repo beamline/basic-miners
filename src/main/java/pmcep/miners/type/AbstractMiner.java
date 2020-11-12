@@ -58,10 +58,10 @@ public abstract class AbstractMiner {
 			throw new MinerException("Miner instance not yet configured");
 		}
 		this.client = new XesMqttConsumer(stream.getBrokerHost(), stream.getTopicBase());
-		client.subscribe(new XesMqttEventCallback() {
+		client.subscribe(stream.getProcessName(), new XesMqttEventCallback() {
 			@Override
 			public void accept(XesMqttEvent e) {
-				consumeEvent(e.getCaseId(),e.getActivityName());
+				consumeEvent(e.getCaseId(), e.getActivityName());
 			}
 		});
 
