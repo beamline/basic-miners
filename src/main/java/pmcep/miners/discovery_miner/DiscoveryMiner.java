@@ -2,7 +2,6 @@ package pmcep.miners.discovery_miner;
 import java.util.*;
 
 
-import lombok.Getter;
 import pmcep.miners.discovery_miner.view.graph.ColorPalette;
 import pmcep.miners.discovery_miner.view.graph.PMDotModel;
 import pmcep.miners.type.AbstractMiner;
