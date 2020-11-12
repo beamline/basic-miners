@@ -42,7 +42,7 @@ public class DummyMiner extends AbstractMiner {
 	public List<MinerView> getViews(Collection<MinerParameterValue> collection) {
 		List<MinerView> views = new ArrayList<>();
 		for (MinerParameterValue v : collection) {
-			views.add(new MinerView(v.getName(), "the value for " + v.getName() + " is " + v.getValue()));
+			views.add(new MinerView(v.getName(), "the value for " + v.getName() + " is " + v.getValue(), MinerView.Type.RAW));
 		}
 		return views;
 	}

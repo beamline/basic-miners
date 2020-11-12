@@ -11,6 +11,7 @@ import pmcep.web.annotations.ExposedMinerParameter;
 import pmcep.web.miner.models.MinerParameter;
 import pmcep.web.miner.models.MinerParameterValue;
 import pmcep.web.miner.models.MinerView;
+import pmcep.web.miner.models.MinerView.Type;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -64,9 +65,9 @@ public class DiscoveryMiner extends AbstractMiner {
         ProcessMap processMap = mine(threshold);
 
         List<MinerView> views = new ArrayList<>();
-        views.add(new MinerView("Graphical ", new PMDotModel(processMap, ColorPalette.Colors.BLUE).toString()));
+        views.add(new MinerView("Graphical ", new PMDotModel(processMap, ColorPalette.Colors.BLUE).toString(), Type.GRAPHVIZ));
 
-        views.add(new MinerView("Textual", texturalRepresentation(processMap)));
+        views.add(new MinerView("Textual", texturalRepresentation(processMap), Type.RAW));
         return views;
 
     }

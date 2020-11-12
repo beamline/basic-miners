@@ -265,3 +265,9 @@ definitions:
       value:
         type: "object"
         description: "The content of the view"
+      type:
+        type: "string"
+        description: "The type of view to return"
+        enum:
+          - "raw"
+          - "graphviz"

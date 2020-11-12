@@ -8,6 +8,7 @@ import pmcep.miners.type.AbstractMiner;
 import pmcep.web.annotations.ExposedMiner;
 import pmcep.web.miner.models.MinerParameterValue;
 import pmcep.web.miner.models.MinerView;
+import pmcep.web.miner.models.MinerView.Type;
 
 @ExposedMiner(
 	name = "test miner 2",
@@ -32,9 +33,9 @@ public class DummyMiner2 extends AbstractMiner {
 	@Override
 	public List<MinerView> getViews(Collection<MinerParameterValue> collection) {
 		List<MinerView> views = new ArrayList<>();
-		views.add(new MinerView("view test miner 2.1", "test value 2.1"));
-		views.add(new MinerView("view test miner 2.2", "test value 2.2"));
-		views.add(new MinerView("view test miner 2.3", "test value 2.3"));
+		views.add(new MinerView("view test miner 2.1", "test value 2.1", Type.RAW));
+		views.add(new MinerView("view test miner 2.2", "test value 2.2", Type.RAW));
+		views.add(new MinerView("view test miner 2.3", "test value 2.3", Type.RAW));
 		return views;
 	}
 }
