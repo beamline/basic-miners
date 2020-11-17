@@ -126,7 +126,7 @@ public class RecordingMiner extends AbstractMiner {
         new File(path.toString()).delete();
 
         return blobClient.getBlobUrl();*/
-        return null
+        return null;
 
     }
 
