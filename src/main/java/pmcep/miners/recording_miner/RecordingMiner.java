@@ -17,6 +17,7 @@ import pmcep.web.miner.models.MinerView;
 
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.OffsetDateTime;
@@ -78,7 +79,12 @@ public class RecordingMiner extends AbstractMiner {
                 switch (String.valueOf(minerParameterValue.getValue())) {
                     case "XML":
                         String xmlFilePath = new XMLParser().convertToXML((HashMap<String, Trace>) caseMap);
-                        String xmlLink = saveToCloud(xmlFilePath);
+                        String xmlLink = null;
+                        try {
+                            xmlLink = saveToCloud(xmlFilePath);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         String htmlLink = "<a href="+ xmlLink +">Download XML file here</a>";
                         views.add(new MinerView("Textual", htmlLink, MinerView.Type.RAW));
                         break;
@@ -93,7 +99,7 @@ public class RecordingMiner extends AbstractMiner {
         return views;
     }
 
-    public String saveToCloud(String xmlPath){
+    public String saveToCloud(String xmlPath) throws IOException {
         //Azure Connection string
         String connectStr = "DefaultEndpointsProtocol=https;AccountName=opmframework;AccountKey=GZuLV1fA3apRDprLpZ/3kMCgiR8l6j9EhH+M88ncFB9xw91xXWveeEZbcJeBjCCIHJOk7+T6tcCh/E324x2dxg==;EndpointSuffix=core.windows.net";
 
@@ -114,19 +120,18 @@ public class RecordingMiner extends AbstractMiner {
         } catch (UnsupportedOperationException err) {
             System.out.printf("Set Access Policy failed because: %s\n", err);
         }
-
-        Path path = Paths.get(xmlPath);
-        String fileName = path.getFileName().toString();
-
-        /*BlobClient blobClient = containerClient.getBlobClient(fileName);
-
+        File file = File.createTempFile("temp", null);
+        //Path path = Paths.get(xmlPath);
+        //String fileName = path.getFileName().toString();
+        BlobClient blobClient = containerClient.getBlobClient(file.getName());
+        //BlobClient blobClient = containerClient.getBlobClient(fileName);
         blobClient.uploadFromFile(xmlPath);
+        //blobClient.uploadFromFile(xmlPath);
 
         //clean temp folder after
-        new File(path.toString()).delete();
+        //new File(path.toString()).delete();
 
-        return blobClient.getBlobUrl();*/
-        return null;
+        return blobClient.getBlobUrl();
 
     }
 
