@@ -95,16 +95,9 @@ public class RecordingMiner extends AbstractMiner {
     }
 
     public String saveToCloud(String xmlPath){
-        Console console = System.console();
-        if(console != null) {
-            PrintWriter pw = console.writer();
-            pw.println("Console class writer() method example");
-        }else {
-            System.out.println("Console is null");
-        }
+
         //Azure Connection string
         String connectStr = "DefaultEndpointsProtocol=https;AccountName=opmframework;AccountKey=GZuLV1fA3apRDprLpZ/3kMCgiR8l6j9EhH+M88ncFB9xw91xXWveeEZbcJeBjCCIHJOk7+T6tcCh/E324x2dxg==;EndpointSuffix=core.windows.net";
-
 
         BlobServiceClient blobServiceClient = new BlobServiceClientBuilder().connectionString(connectStr).buildClient();
 
