@@ -16,7 +16,9 @@ import pmcep.web.miner.models.MinerView;
 
 
 import javax.xml.transform.stream.StreamResult;
+import java.io.Console;
 import java.io.File;
+import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.OffsetDateTime;
@@ -93,6 +95,13 @@ public class RecordingMiner extends AbstractMiner {
     }
 
     public String saveToCloud(String xmlPath){
+        Console console = System.console();
+        if(console != null) {
+            PrintWriter pw = console.writer();
+            pw.println("Console class writer() method example");
+        }else {
+            System.out.println("Console is null");
+        }
         //Azure Connection string
         String connectStr = "DefaultEndpointsProtocol=https;AccountName=opmframework;AccountKey=GZuLV1fA3apRDprLpZ/3kMCgiR8l6j9EhH+M88ncFB9xw91xXWveeEZbcJeBjCCIHJOk7+T6tcCh/E324x2dxg==;EndpointSuffix=core.windows.net";
 
