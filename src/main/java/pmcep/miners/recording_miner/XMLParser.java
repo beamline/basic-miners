@@ -14,14 +14,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 public class XMLParser {
 
-
-    public StreamResult convertToXML(HashMap<String,Trace> caseMap) {
+    public static final String xmlFilePath = "src/main/java/pmcep/miners/recording_miner/tmp_data/";
+    public String convertToXML(HashMap<String,Trace> caseMap) {
         try{
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
 
@@ -59,11 +58,12 @@ public class XMLParser {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(document);
-            StreamResult streamResult = new StreamResult(System.out);
+            String filePath = xmlFilePath + "./xml-" + java.util.UUID.randomUUID().toString() + ".xml";
+            StreamResult streamResult = new StreamResult(new File(filePath));
 
 
             transformer.transform(domSource, streamResult);
-            return streamResult;
+            return filePath;
 
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
