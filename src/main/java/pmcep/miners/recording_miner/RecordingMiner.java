@@ -118,14 +118,15 @@ public class RecordingMiner extends AbstractMiner {
         Path path = Paths.get(xmlPath);
         String fileName = path.getFileName().toString();
 
-        BlobClient blobClient = containerClient.getBlobClient(fileName);
+        /*BlobClient blobClient = containerClient.getBlobClient(fileName);
 
         blobClient.uploadFromFile(xmlPath);
 
         //clean temp folder after
         new File(path.toString()).delete();
 
-        return blobClient.getBlobUrl();
+        return blobClient.getBlobUrl();*/
+        return null
 
     }
 
