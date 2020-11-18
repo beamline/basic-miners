@@ -78,9 +78,10 @@ public class RecordingMiner extends AbstractMiner {
             if (minerParameterValue.getName().equals("File type")) {
                 switch (String.valueOf(minerParameterValue.getValue())) {
                     case "XML":
-                        String xmlFilePath = new XMLParser().convertToXML((HashMap<String, Trace>) caseMap);
-                        String xmlLink = saveToCloud(xmlFilePath);
-                        String htmlLink = "<a href="+ xmlLink +">Download XML file here</a>";
+                        //String xmlFilePath = new XMLParser().convertToXML((HashMap<String, Trace>) caseMap);
+                        //String xmlLink = saveToCloud(xmlFilePath);
+                        saveToCloud("path");
+                        //String htmlLink = "<a href="+ xmlLink +">Download XML file here</a>";
                         views.add(new MinerView("Textual", htmlLink, MinerView.Type.RAW));
                         break;
 
@@ -115,8 +116,8 @@ public class RecordingMiner extends AbstractMiner {
         } catch (UnsupportedOperationException err) {
             System.out.printf("Set Access Policy failed because: %s\n", err);
         }
-
-        Path path = Paths.get(xmlPath);
+        return "";
+        /*Path path = Paths.get(xmlPath);
         String fileName = path.getFileName().toString();
 
         BlobClient blobClient = containerClient.getBlobClient(fileName);
@@ -126,7 +127,7 @@ public class RecordingMiner extends AbstractMiner {
         //clean temp folder after
         new File(path.toString()).delete();
 
-        return blobClient.getBlobUrl();
+        return blobClient.getBlobUrl();*/
 
     }
 
