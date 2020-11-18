@@ -80,7 +80,8 @@ public class RecordingMiner extends AbstractMiner {
                     case "XML":
                         //String xmlFilePath = new XMLParser().convertToXML((HashMap<String, Trace>) caseMap);
                         //String xmlLink = saveToCloud(xmlFilePath);
-                        saveToCloud("path");
+                        String htmlLink = saveToCloud("path");
+
                         //String htmlLink = "<a href="+ xmlLink +">Download XML file here</a>";
                         views.add(new MinerView("Textual", htmlLink, MinerView.Type.RAW));
                         break;
@@ -116,7 +117,7 @@ public class RecordingMiner extends AbstractMiner {
         } catch (UnsupportedOperationException err) {
             System.out.printf("Set Access Policy failed because: %s\n", err);
         }
-        return "";
+        return "this is a test";
         /*Path path = Paths.get(xmlPath);
         String fileName = path.getFileName().toString();
 
