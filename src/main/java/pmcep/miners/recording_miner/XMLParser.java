@@ -13,13 +13,13 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 public class XMLParser {
 
-    public static final String xmlFilePath = "src/main/java/pmcep/miners/recording_miner/tmp_data/";
+
     public String convertToXML(HashMap<String,Trace> caseMap) {
         try{
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
@@ -58,12 +58,16 @@ public class XMLParser {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(document);
-            String filePath = xmlFilePath + "./xml-" + java.util.UUID.randomUUID().toString() + ".xml";
-            StreamResult streamResult = new StreamResult(new File(filePath));
-
+            //String filePath = xmlFilePath + "./xml-" + java.util.UUID.randomUUID().toString() + ".xml";
+            StringWriter outWriter = new StringWriter();
+            StreamResult streamResult = new StreamResult(outWriter);
 
             transformer.transform(domSource, streamResult);
-            return filePath;
+
+            StringBuffer sb = outWriter.getBuffer();
+            String xmlString = sb.toString();
+
+            return xmlString;
 
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();

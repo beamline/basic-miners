@@ -7,6 +7,7 @@ import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.blob.models.BlobAccessPolicy;
 import com.azure.storage.blob.models.BlobSignedIdentifier;
 import com.azure.storage.blob.models.PublicAccessType;
+import com.azure.storage.blob.specialized.BlockBlobClient;
 import pmcep.miner.AbstractMiner;
 import pmcep.web.annotations.ExposedMiner;
 import pmcep.web.annotations.ExposedMinerParameter;
@@ -76,11 +77,10 @@ public class RecordingMiner extends AbstractMiner {
             if (minerParameterValue.getName().equals("File type")) {
                 switch (String.valueOf(minerParameterValue.getValue())) {
                     case "XML":
-                        //String xmlFilePath = new XMLParser().convertToXML((HashMap<String, Trace>) caseMap);
-                        //String xmlLink = saveToCloud(xmlFilePath);
-                        String htmlLink = saveToCloud("path");
+                        String xmlString= new XMLParser().convertToXML((HashMap<String, Trace>) caseMap);
 
-                        //String htmlLink = "<a href="+ xmlLink +">Download XML file here</a>";
+                        String xmlLink = saveToCloud(xmlString);
+                        String htmlLink = "<a href="+ xmlLink +">Download XML file here</a>";
                         views.add(new MinerView("Textual", htmlLink, MinerView.Type.RAW));
                         break;
 
@@ -94,7 +94,7 @@ public class RecordingMiner extends AbstractMiner {
         return views;
     }
 
-    public String saveToCloud(String xmlPath) throws IOException {
+    public String saveToCloud(String xmlString){
 
         //Azure Connection string
         String connectStr = "DefaultEndpointsProtocol=https;AccountName=opmframework;AccountKey=GZuLV1fA3apRDprLpZ/3kMCgiR8l6j9EhH+M88ncFB9xw91xXWveeEZbcJeBjCCIHJOk7+T6tcCh/E324x2dxg==;EndpointSuffix=core.windows.net";
@@ -116,26 +116,17 @@ public class RecordingMiner extends AbstractMiner {
             System.out.printf("Set Access Policy failed because: %s\n", err);
         }
 
-        String localPath = "/";
-        String fileName = "quickstart" + java.util.UUID.randomUUID() + ".txt";
-        File localFile = new File(localPath + fileName);
+        BlockBlobClient blockBlobClient = containerClient.getBlobClient("xml_recording.xml").getBlockBlobClient();
 
-// Write text to the file
-        FileWriter writer = new FileWriter(localPath + fileName, true);
-        writer.write("Hello, World!");
-        writer.close();
 
-        //Path path = Paths.get(xmlPath);
-        //String fileName = path.getFileName().toString();
 
-        BlobClient blobClient = containerClient.getBlobClient(fileName);
+        try (ByteArrayInputStream dataStream = new ByteArrayInputStream(xmlString.getBytes())) {
+            blockBlobClient.upload(dataStream, xmlString.length());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        blobClient.uploadFromFile(xmlPath);
-
-        //clean temp folder after
-        //new File(path.toString()).delete();
-
-        return blobClient.getBlobUrl();
+        return blockBlobClient.getBlobUrl();
 
     }
 
