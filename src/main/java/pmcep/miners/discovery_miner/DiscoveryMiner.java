@@ -4,7 +4,7 @@ import java.util.*;
 
 import pmcep.miners.discovery_miner.view.graph.ColorPalette;
 import pmcep.miners.discovery_miner.view.graph.PMDotModel;
-import pmcep.miners.type.AbstractMiner;
+import pmcep.miner.AbstractMiner;
 import pmcep.web.annotations.ExposedMiner;
 import pmcep.web.annotations.ExposedMinerParameter;
 import pmcep.web.miner.models.MinerParameter;

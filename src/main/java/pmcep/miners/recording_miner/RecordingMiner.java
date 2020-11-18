@@ -7,7 +7,7 @@ import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.azure.storage.blob.models.BlobAccessPolicy;
 import com.azure.storage.blob.models.BlobSignedIdentifier;
 import com.azure.storage.blob.models.PublicAccessType;
-import pmcep.miners.type.AbstractMiner;
+import pmcep.miner.AbstractMiner;
 import pmcep.web.annotations.ExposedMiner;
 import pmcep.web.annotations.ExposedMinerParameter;
 import pmcep.web.miner.models.MinerParameter;

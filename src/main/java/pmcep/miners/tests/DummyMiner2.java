@@ -1,10 +1,10 @@
-package pmcep.miners;
+package pmcep.miners.tests;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import pmcep.miners.type.AbstractMiner;
+import pmcep.miner.AbstractMiner;
 import pmcep.web.annotations.ExposedMiner;
 import pmcep.web.miner.models.MinerParameterValue;
 import pmcep.web.miner.models.MinerView;
