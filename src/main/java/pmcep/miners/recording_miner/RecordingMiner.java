@@ -16,9 +16,7 @@ import pmcep.web.miner.models.MinerView;
 
 
 import javax.xml.transform.stream.StreamResult;
-import java.io.Console;
-import java.io.File;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.OffsetDateTime;
@@ -96,7 +94,7 @@ public class RecordingMiner extends AbstractMiner {
         return views;
     }
 
-    public String saveToCloud(String xmlPath){
+    public String saveToCloud(String xmlPath) throws IOException {
 
         //Azure Connection string
         String connectStr = "DefaultEndpointsProtocol=https;AccountName=opmframework;AccountKey=GZuLV1fA3apRDprLpZ/3kMCgiR8l6j9EhH+M88ncFB9xw91xXWveeEZbcJeBjCCIHJOk7+T6tcCh/E324x2dxg==;EndpointSuffix=core.windows.net";
@@ -117,18 +115,27 @@ public class RecordingMiner extends AbstractMiner {
         } catch (UnsupportedOperationException err) {
             System.out.printf("Set Access Policy failed because: %s\n", err);
         }
-        return "this is a test";
-        /*Path path = Paths.get(xmlPath);
-        String fileName = path.getFileName().toString();
+
+        String localPath = "/";
+        String fileName = "quickstart" + java.util.UUID.randomUUID() + ".txt";
+        File localFile = new File(localPath + fileName);
+
+// Write text to the file
+        FileWriter writer = new FileWriter(localPath + fileName, true);
+        writer.write("Hello, World!");
+        writer.close();
+
+        //Path path = Paths.get(xmlPath);
+        //String fileName = path.getFileName().toString();
 
         BlobClient blobClient = containerClient.getBlobClient(fileName);
 
         blobClient.uploadFromFile(xmlPath);
 
         //clean temp folder after
-        new File(path.toString()).delete();
+        //new File(path.toString()).delete();
 
-        return blobClient.getBlobUrl();*/
+        return blobClient.getBlobUrl();
 
     }
 
