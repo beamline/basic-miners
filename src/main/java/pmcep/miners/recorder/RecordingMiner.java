@@ -68,7 +68,7 @@ public class RecordingMiner extends AbstractMiner {
 		XSerializer serializer = new XesXmlSerializer();
 		serializer.serialize(log, new FileOutputStream(tempFile));
 		
-		return "/files/" + tempFile.getName();
+		return "/files/xml/" + tempFile.getName();
 	}
 
 }
