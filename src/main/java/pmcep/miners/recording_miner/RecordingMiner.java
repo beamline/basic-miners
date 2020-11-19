@@ -1,6 +1,5 @@
 package pmcep.miners.recording_miner;
 
-import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobServiceClient;
 import com.azure.storage.blob.BlobServiceClientBuilder;
@@ -16,14 +15,9 @@ import pmcep.web.miner.models.MinerParameterValue;
 import pmcep.web.miner.models.MinerView;
 
 
-import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.OffsetDateTime;
 import java.util.*;
-
-import static javax.annotation.Resource.AuthenticationType.CONTAINER;
 
 @ExposedMiner(
         name = "Recording Miner",
@@ -77,10 +71,19 @@ public class RecordingMiner extends AbstractMiner {
             if (minerParameterValue.getName().equals("File type")) {
                 switch (String.valueOf(minerParameterValue.getValue())) {
                     case "XML":
-                        String xmlString= new XMLParser().convertToXML((HashMap<String, Trace>) caseMap);
 
-                        String xmlLink = saveToCloud(xmlString);
-                        String htmlLink = "<a href="+ xmlLink +">Download XML file here</a>";
+                        BlockBlobClient blockBlobClient = createBlobContainer("xml");
+
+
+                        String htmlLink = "<a href="+ blockBlobClient.getBlobUrl() +">Download XML file here</a>";
+
+                        new Thread(() -> {
+                            //upload XML asynchronous
+                            String xmlString= new XMLParser().convertToXML((HashMap<String, Trace>) caseMap);
+                            uploadToCloud(xmlString, blockBlobClient);
+                            
+                        }).start();
+
                         views.add(new MinerView("Textual", htmlLink, MinerView.Type.RAW));
                         break;
 
@@ -94,7 +97,7 @@ public class RecordingMiner extends AbstractMiner {
         return views;
     }
 
-    public String saveToCloud(String xmlString){
+    public BlockBlobClient createBlobContainer(String fileType){
 
         //Azure Connection string
         String connectStr = "DefaultEndpointsProtocol=https;AccountName=opmframework;AccountKey=GZuLV1fA3apRDprLpZ/3kMCgiR8l6j9EhH+M88ncFB9xw91xXWveeEZbcJeBjCCIHJOk7+T6tcCh/E324x2dxg==;EndpointSuffix=core.windows.net";
@@ -116,17 +119,21 @@ public class RecordingMiner extends AbstractMiner {
             System.out.printf("Set Access Policy failed because: %s\n", err);
         }
 
-        BlockBlobClient blockBlobClient = containerClient.getBlobClient("xml_recording.xml").getBlockBlobClient();
+        BlockBlobClient blockBlobClient = containerClient.getBlobClient("Recording." + fileType).getBlockBlobClient();
 
 
 
-        try (ByteArrayInputStream dataStream = new ByteArrayInputStream(xmlString.getBytes())) {
-            blockBlobClient.upload(dataStream, xmlString.length());
+
+        return blockBlobClient;
+    }
+
+    public void uploadToCloud(String fileString,BlockBlobClient blockBlobClient ){
+
+        try (ByteArrayInputStream dataStream = new ByteArrayInputStream(fileString.getBytes())) {
+            blockBlobClient.upload(dataStream, fileString.length());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return blockBlobClient.getBlobUrl();
 
     }
 
