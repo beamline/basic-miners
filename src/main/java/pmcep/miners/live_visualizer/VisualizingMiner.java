@@ -61,11 +61,11 @@ public class VisualizingMiner extends AbstractMiner {
         for(XEvent event : eventList) {
 
             values.add(Arrays.asList("Case", "Activity", "Timestamp"));
-            /*values.add(Arrays.asList( event.getAttributes().values()));
-            values.add(Arrays.asList(event.getAttributes().get("concept:caseId"),event.getAttributes().get("cconcept:name"),
-                    event.getAttributes().get("time:timestamp")));*/
+            //values.add(event.getAttributes().values());
+            values.add(Arrays.asList(event.getAttributes().get("concept:caseId"),event.getAttributes().get("concept:name"),
+                    "D"));
         }
-
+        System.out.println(values);
         Map<String, Object> options = new HashMap<String, Object>() {{
             put("title", "Live Stream");
             put("subtitle", "Events received the last " + minutesToStore + " minutes");
