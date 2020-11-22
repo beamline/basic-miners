@@ -61,9 +61,9 @@ public class VisualizingMiner extends AbstractMiner {
         for(XEvent event : eventList) {
 
             values.add(Arrays.asList("Case", "Activity", "Timestamp"));
-            values.add(Arrays.asList( event.getAttributes().values()));
+            /*values.add(Arrays.asList( event.getAttributes().values()));
             values.add(Arrays.asList(event.getAttributes().get("concept:caseId"),event.getAttributes().get("cconcept:name"),
-                    event.getAttributes().get("time:timestamp")));
+                    event.getAttributes().get("time:timestamp")));*/
         }
 
         Map<String, Object> options = new HashMap<String, Object>() {{
