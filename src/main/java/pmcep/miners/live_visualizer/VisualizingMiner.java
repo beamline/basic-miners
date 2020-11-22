@@ -60,7 +60,7 @@ public class VisualizingMiner extends AbstractMiner {
         List<List<Object>> values =new ArrayList<>();
         for(XEvent event : eventList) {
 
-            values.add(Arrays.asList("Case", "Activity", "Timestamp"));
+            values.add(Arrays.asList(event.getAttributes().values()));
         }
 
         Map<String, Object> options = new HashMap<String, Object>() {{
