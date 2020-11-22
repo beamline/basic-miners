@@ -66,7 +66,7 @@ public class VisualizingMiner extends AbstractMiner {
                     event.getAttributes().get("time:timestamp")));
         }
 
-        Map<String, Object> options = new HashMap<String, Object>() {
+        Map<String, Object> options = new HashMap<String, Object>() {{
             put("title", "Live Stream");
             put("subtitle", "Events received the last " + minutesToStore + " minutes");
         }};
