@@ -55,23 +55,14 @@ public class VisualizingMiner extends AbstractMiner {
         List<MinerView> views = new ArrayList<>();
         List<Object> headers = Arrays.asList("Case", "Activity", "Timestamp");
 
-
-
-        List<List<Object>> values =new ArrayList<>();
-        for(XEvent event : eventList) {
-
-            values.add(Arrays.asList(event.getAttributes().get("concept:caseId").toString(),event.getAttributes().get("concept:name").toString(),
-                    event.getAttributes().get("time:timestamp").toString()));
-        }
-        System.out.println(values);
         Map<String, Object> options = new HashMap<String, Object>() {{
             put("title", "Live Stream");
             put("subtitle", "Events received the last " + minutesToStore + " minutes");
         }};
 
-        for (MinerViewGoogle.TYPE t : MinerViewGoogle.TYPE.values()) {
-            views.add(new MinerViewGoogle(t + " view", headers, values, options, t));
-        }
+        views.add(new MinerViewGoogle(  "Table view", headers, fillTable(), options, MinerViewGoogle.TYPE.Table));
+        views.add(new MinerViewGoogle(  "Bar view", headers, fillTable(), options, MinerViewGoogle.TYPE.BarChart));
+
 
         return views;
     }
@@ -93,7 +84,34 @@ public class VisualizingMiner extends AbstractMiner {
         }
 
     }
+    public List<List<Object>> fillTable(){
 
+        List<List<Object>> values =new ArrayList<>();
+        for(XEvent event : eventList) {
+
+            values.add(Arrays.asList(event.getAttributes().get("concept:caseId").toString(),event.getAttributes().get("concept:name").toString(),
+                    event.getAttributes().get("time:timestamp").toString()));
+        }
+
+        return values;
+    }
+
+    public List<List<Object>> fillBarChart(){
+        Map<String,Integer> freqMap = new HashMap<>();
+        for(XEvent event : eventList) {
+            String caseID = event.getAttributes().get("concept:caseId").toString();
+            if (freqMap.containsKey(caseID)) {
+                freqMap.put(caseID,freqMap.get(caseID)+1);
+            }else{
+                freqMap.put(caseID,0);
+            }
+        }
+        List<List<Object>> values =new ArrayList<>();
+        for (Map.Entry<String,Integer> entry : freqMap.entrySet())
+           values.add(Arrays.asList(entry.getKey(),entry.getValue()));
+
+        return values;
+    }
     public String convertToJson() {
 
         JSONObject responseDetailsJson = new JSONObject();
