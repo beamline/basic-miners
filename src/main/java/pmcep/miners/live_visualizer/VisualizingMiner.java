@@ -13,6 +13,7 @@ import pmcep.web.miner.models.MinerParameter;
 import pmcep.web.miner.models.MinerParameterValue;
 import pmcep.web.miner.models.MinerView;
 import pmcep.web.miner.models.MinerViewGoogle;
+import pmcep.web.miner.models.notifications.RefreshViewNotification;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +46,8 @@ public class VisualizingMiner extends AbstractMiner {
 
         trimList();
 
-        updateToClient();
+        notifyToClients(new RefreshViewNotification());
+//        updateToClient();
 
 
     }

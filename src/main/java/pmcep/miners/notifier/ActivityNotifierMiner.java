@@ -9,6 +9,7 @@ import pmcep.web.annotations.ExposedMiner;
 import pmcep.web.annotations.ExposedMinerParameter;
 import pmcep.web.miner.models.MinerParameterValue;
 import pmcep.web.miner.models.MinerView;
+import pmcep.web.miner.models.notifications.ToastrNotification;
 import pmcep.web.miner.models.MinerParameter.Type;
 
 @ExposedMiner(
@@ -31,7 +32,7 @@ public class ActivityNotifierMiner extends AbstractMiner {
 	@Override
 	public void consumeEvent(String caseID, String activityName) {
 		if (activityName.equals(activityToNotify)) {
-			notifyToClients("Activity \"" + activityToNotify + "\" observed in case " + caseID);
+			notifyToClients(new ToastrNotification("Activity \"" + activityToNotify + "\" observed in case " + caseID));
 		}
 	}
 
