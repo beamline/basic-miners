@@ -55,7 +55,7 @@ public class VisualizingMiner extends AbstractMiner {
     @Override
     public List<MinerView> getViews(Collection<MinerParameterValue> collection) {
         List<MinerView> views = new ArrayList<>();
-        List<Object> headers = Arrays.asList("Case", "Activity", "Timestamp");
+        List<Object> headers = Arrays.asList("Activity", "Case", "Timestamp");
 
         Map<String, Object> options = new HashMap<>() {{
             put("title", "Live Stream");
@@ -79,9 +79,7 @@ public class VisualizingMiner extends AbstractMiner {
 
 
         while (latestDateTime.after(XLogHelper.getTimestamp(eventList.getFirst()))) {
-            System.out.println("latestTime after log time");
             eventList.removeFirst();
-
             if(eventList.isEmpty()){break;}
         }
 
@@ -89,6 +87,7 @@ public class VisualizingMiner extends AbstractMiner {
     public List<List<Object>> fillTable(){
 
         List<List<Object>> values =new ArrayList<>();
+
 
         ListIterator listIterator = eventList.listIterator(eventList.size());
         while (listIterator.hasPrevious()) {
@@ -105,13 +104,14 @@ public class VisualizingMiner extends AbstractMiner {
             if (freqMap.containsKey(caseID)) {
                 freqMap.put(caseID,freqMap.get(caseID)+1);
             }else{
-                freqMap.put(caseID,0);
+                freqMap.put(caseID,1);
             }
         }
         List<List<Object>> values =new ArrayList<>();
         for (Map.Entry<String,Integer> entry : freqMap.entrySet())
            values.add(Arrays.asList(entry.getKey(),entry.getValue()));
 
+        System.out.println(values);
         return values;
     }
     public String convertToJson() {
