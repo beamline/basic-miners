@@ -39,8 +39,8 @@ public class VisualizingMiner extends AbstractMiner {
     @Override
     public void consumeEvent(String caseID, String activityName) {
         XEvent event = new XEventImpl();
-        XLogHelper.decorateElement(event, "concept:name", caseID);
-        XLogHelper.decorateElement(event, "concept:caseId", activityName);
+        XLogHelper.decorateElement(event, "concept:caseId", caseID);
+        XLogHelper.decorateElement(event, "concept:name", activityName);
         XLogHelper.setTimestamp(event, new Date());
         eventList.add(event);
 
@@ -55,7 +55,7 @@ public class VisualizingMiner extends AbstractMiner {
     @Override
     public List<MinerView> getViews(Collection<MinerParameterValue> collection) {
         List<MinerView> views = new ArrayList<>();
-        List<Object> headersTable = Arrays.asList("Activity", "Cases", "Timestamp");
+        List<Object> headersTable = Arrays.asList("Cases", "Activity", "Timestamp");
         List<Object> headersBarChart = Arrays.asList("CaseId", "Freq");
 
         Map<String, Object> options = new HashMap<>() {{
