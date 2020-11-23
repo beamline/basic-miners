@@ -39,8 +39,8 @@ public class VisualizingMiner extends AbstractMiner {
     @Override
     public void consumeEvent(String caseID, String activityName) {
         XEvent event = new XEventImpl();
-        XLogHelper.decorateElement(event, "concept:caseId", caseID);
-        XLogHelper.decorateElement(event, "concept:name", activityName);
+        XLogHelper.decorateElement(event, "concept:name", caseID);
+        XLogHelper.decorateElement(event, "concept:caseId", activityName);
         XLogHelper.setTimestamp(event, new Date());
         eventList.add(event);
 
@@ -55,7 +55,7 @@ public class VisualizingMiner extends AbstractMiner {
     @Override
     public List<MinerView> getViews(Collection<MinerParameterValue> collection) {
         List<MinerView> views = new ArrayList<>();
-        List<Object> headers = Arrays.asList("Activity", "Case", "Timestamp");
+        List<Object> headers = Arrays.asList("Case", "Activity", "Timestamp");
 
         Map<String, Object> options = new HashMap<>() {{
             put("title", "Live Stream");
@@ -63,7 +63,7 @@ public class VisualizingMiner extends AbstractMiner {
         }};
 
         views.add(new MinerViewGoogle(  "Table view", headers, fillTable(), options, MinerViewGoogle.TYPE.Table));
-        views.add(new MinerViewGoogle(  "Bar view", headers, fillBarChart(), options, MinerViewGoogle.TYPE.BarChart));
+        //views.add(new MinerViewGoogle(  "Bar view", headers, fillBarChart(), options, MinerViewGoogle.TYPE.BarChart));
 
 
         return views;
@@ -87,13 +87,20 @@ public class VisualizingMiner extends AbstractMiner {
     public List<List<Object>> fillTable(){
 
         List<List<Object>> values =new ArrayList<>();
+        List<List<Object>> values1 =new ArrayList<>();
+
 
 
         ListIterator listIterator = eventList.listIterator(eventList.size());
         while (listIterator.hasPrevious()) {
             XEvent event = (XEvent) listIterator.previous();
-            values.add(Arrays.asList(event.getAttributes().values().toArray().toString()));
+            values.add(Arrays.asList(event.getAttributes().get("concept:caseId").toString(),
+                    event.getAttributes().get("concept:name").toString(),
+                    event.getAttributes().get("time:timestamp").toString()));
+
+
         }
+
         return values;
     }
 
