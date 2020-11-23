@@ -1,6 +1,5 @@
 package pmcep.miners.live_visualizer;
 
-
 import org.deckfour.xes.model.XEvent;
 import org.deckfour.xes.model.impl.XEventImpl;
 import org.json.simple.JSONArray;
@@ -17,6 +16,7 @@ import pmcep.web.miner.models.notifications.RefreshViewNotification;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 
 @ExposedMiner(
@@ -47,7 +47,7 @@ public class VisualizingMiner extends AbstractMiner {
         trimList();
 
         notifyToClients(new RefreshViewNotification());
-//        updateToClient();
+
 
 
     }
@@ -89,12 +89,12 @@ public class VisualizingMiner extends AbstractMiner {
     public List<List<Object>> fillTable(){
 
         List<List<Object>> values =new ArrayList<>();
-        for(XEvent event : eventList) {
 
-            values.add(Arrays.asList(event.getAttributes().get("concept:caseId").toString(),event.getAttributes().get("concept:name").toString(),
-                    event.getAttributes().get("time:timestamp").toString()));
+        ListIterator listIterator = eventList.listIterator(eventList.size());
+        while (listIterator.hasPrevious()) {
+            XEvent event = (XEvent) listIterator.previous();
+            values.add(Arrays.asList(event.getAttributes().values().toArray()));
         }
-
         return values;
     }
 
