@@ -92,7 +92,7 @@ public class VisualizingMiner extends AbstractMiner {
         ListIterator listIterator = eventList.listIterator(eventList.size());
         while (listIterator.hasPrevious()) {
             XEvent event = (XEvent) listIterator.previous();
-            values.add(Arrays.asList(event.getAttributes().values().toArray()));
+            values.add(Arrays.asList(event.getAttributes().values().toArray().toString()));
         }
         return values;
     }
@@ -111,7 +111,7 @@ public class VisualizingMiner extends AbstractMiner {
         for (Map.Entry<String,Integer> entry : freqMap.entrySet())
            values.add(Arrays.asList(entry.getKey(),entry.getValue()));
 
-        System.out.println(values);
+
         return values;
     }
     public String convertToJson() {
