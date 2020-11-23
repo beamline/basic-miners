@@ -45,7 +45,7 @@ public class VisualizingMiner extends AbstractMiner {
 
         trimList();
 
-
+        updateToClient();
 
 
     }
@@ -55,13 +55,13 @@ public class VisualizingMiner extends AbstractMiner {
         List<MinerView> views = new ArrayList<>();
         List<Object> headers = Arrays.asList("Case", "Activity", "Timestamp");
 
-        Map<String, Object> options = new HashMap<String, Object>() {{
+        Map<String, Object> options = new HashMap<>() {{
             put("title", "Live Stream");
             put("subtitle", "Events received the last " + minutesToStore + " minutes");
         }};
 
         views.add(new MinerViewGoogle(  "Table view", headers, fillTable(), options, MinerViewGoogle.TYPE.Table));
-        views.add(new MinerViewGoogle(  "Bar view", headers, fillTable(), options, MinerViewGoogle.TYPE.BarChart));
+        views.add(new MinerViewGoogle(  "Bar view", headers, fillBarChart(), options, MinerViewGoogle.TYPE.BarChart));
 
 
         return views;
