@@ -23,7 +23,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
         },
         viewParameters = {
-                @ExposedMinerParameter(name = "threshold", type = MinerParameter.Type.DOUBLE)
+                @ExposedMinerParameter(name = "threshold", type = MinerParameter.Type.RANGE_0_1)
 
         }
 )
