@@ -115,9 +115,9 @@ public class VisualizingMiner extends AbstractMiner {
                 freqMap.put(caseID,1);
             }
         }
-        List<List<Object>> values = new ArrayList<>();
+        List<List<Object>> values =new ArrayList<>();
         for (Map.Entry<String,Integer> entry : freqMap.entrySet())
-           values.add(Arrays.asList(entry.getValue(),entry.getKey()));
+           values.add(Arrays.asList(entry.getKey(),entry.getValue()));
 
 
         return values;
