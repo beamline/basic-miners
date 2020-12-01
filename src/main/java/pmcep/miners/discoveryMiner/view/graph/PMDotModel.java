@@ -1,4 +1,4 @@
-package pmcep.miners.discovery_miner.view.graph;
+package pmcep.miners.discoveryMiner.view.graph;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,9 +7,10 @@ import java.util.Set;
 
 
 import org.apache.commons.lang3.tuple.Pair;
-import pmcep.miners.discovery_miner.ProcessMap;
-import pmcep.miners.discovery_miner.view.graph.graphviz.Dot;
-import pmcep.miners.discovery_miner.view.graph.graphviz.DotNode;
+
+import pmcep.miners.discoveryMiner.ProcessMap;
+import pmcep.miners.discoveryMiner.view.graph.graphviz.Dot;
+import pmcep.miners.discoveryMiner.view.graph.graphviz.DotNode;
 
 
 /**
