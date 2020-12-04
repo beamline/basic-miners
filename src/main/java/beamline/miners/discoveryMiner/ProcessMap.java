@@ -1,4 +1,4 @@
-package pmcep.miners.discoveryMiner;
+package beamline.miners.discoveryMiner;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;

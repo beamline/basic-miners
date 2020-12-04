@@ -1,16 +1,16 @@
-package pmcep.miners.notifier;
+package beamline.miners.notifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import pmcep.miner.AbstractMiner;
-import pmcep.web.annotations.ExposedMiner;
-import pmcep.web.annotations.ExposedMinerParameter;
-import pmcep.web.miner.models.MinerParameterValue;
-import pmcep.web.miner.models.MinerView;
-import pmcep.web.miner.models.MinerParameter.Type;
-import pmcep.web.miner.models.notifications.ToastrNotification;
+import beamline.core.web.annotations.ExposedMiner;
+import beamline.core.web.annotations.ExposedMinerParameter;
+import beamline.core.web.miner.models.MinerParameterValue;
+import beamline.core.web.miner.models.MinerView;
+import beamline.core.web.miner.models.MinerParameter.Type;
+import beamline.core.web.miner.models.notifications.ToastrNotification;
+import beamline.core.miner.AbstractMiner;
 
 @ExposedMiner(
 	name = "Activity notifier",

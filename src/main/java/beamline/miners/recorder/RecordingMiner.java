@@ -1,4 +1,4 @@
-package pmcep.miners.recorder;
+package beamline.miners.recorder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,10 +29,10 @@ import com.azure.storage.blob.models.BlobSignedIdentifier;
 import com.azure.storage.blob.models.PublicAccessType;
 import com.azure.storage.blob.specialized.BlockBlobClient;
 
-import pmcep.miner.AbstractMiner;
-import pmcep.web.annotations.ExposedMiner;
-import pmcep.web.miner.models.MinerParameterValue;
-import pmcep.web.miner.models.MinerView;
+import beamline.core.web.annotations.ExposedMiner;
+import beamline.core.web.miner.models.MinerParameterValue;
+import beamline.core.web.miner.models.MinerView;
+import beamline.core.miner.AbstractMiner;
 
 @ExposedMiner(
 	name = "Recording Miner",

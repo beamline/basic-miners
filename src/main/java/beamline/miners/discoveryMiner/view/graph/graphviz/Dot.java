@@ -1,4 +1,4 @@
-package pmcep.miners.discoveryMiner.view.graph.graphviz;
+package beamline.miners.discoveryMiner.view.graph.graphviz;
 
 import org.apache.commons.io.IOUtils;
 import java.io.BufferedWriter;

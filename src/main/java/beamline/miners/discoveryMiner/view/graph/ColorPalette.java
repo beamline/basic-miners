@@ -1,4 +1,4 @@
-package pmcep.miners.discoveryMiner.view.graph;
+package beamline.miners.discoveryMiner.view.graph;
 
 import java.awt.Color;
 

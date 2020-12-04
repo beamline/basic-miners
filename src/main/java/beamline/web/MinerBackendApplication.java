@@ -1,4 +1,4 @@
-package pmcep.web;
+package beamline.web;
 
 import java.io.File;
 import java.io.FileInputStream;

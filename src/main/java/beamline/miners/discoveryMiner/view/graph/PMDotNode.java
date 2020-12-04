@@ -1,8 +1,8 @@
-package pmcep.miners.discoveryMiner.view.graph;
+package beamline.miners.discoveryMiner.view.graph;
 
 import java.awt.Color;
 
-import pmcep.miners.discoveryMiner.view.graph.graphviz.DotNode;
+import beamline.miners.discoveryMiner.view.graph.graphviz.DotNode;
 
 public class PMDotNode extends DotNode {
 

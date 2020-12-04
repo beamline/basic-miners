@@ -1,4 +1,4 @@
-package pmcep.miners.recorder;
+package beamline.miners.recorder;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,19 +1,19 @@
-package pmcep.miners.discoveryMiner;
+package beamline.miners.discoveryMiner;
 
 import java.util.*;
 
-import pmcep.miner.AbstractMiner;
-import pmcep.miners.discoveryMiner.view.graph.ColorPalette;
-import pmcep.miners.discoveryMiner.view.graph.PMDotModel;
-import pmcep.web.annotations.ExposedMiner;
-import pmcep.web.annotations.ExposedMinerParameter;
-import pmcep.web.miner.models.MinerParameter;
-import pmcep.web.miner.models.MinerParameterValue;
-import pmcep.web.miner.models.MinerView;
-import pmcep.web.miner.models.MinerView.Type;
-
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+
+import beamline.miners.discoveryMiner.view.graph.ColorPalette;
+import beamline.miners.discoveryMiner.view.graph.PMDotModel;
+import beamline.core.miner.AbstractMiner;
+import beamline.core.web.annotations.ExposedMiner;
+import beamline.core.web.annotations.ExposedMinerParameter;
+import beamline.core.web.miner.models.MinerParameter;
+import beamline.core.web.miner.models.MinerParameterValue;
+import beamline.core.web.miner.models.MinerView;
+import beamline.core.web.miner.models.MinerView.Type;
 
 @ExposedMiner(
 	name = "Discovery Miner",

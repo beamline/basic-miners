@@ -1,6 +1,6 @@
-package pmcep.miners.discoveryMiner.view.graph;
+package beamline.miners.discoveryMiner.view.graph;
 
-import pmcep.miners.discoveryMiner.view.graph.graphviz.DotNode;
+import beamline.miners.discoveryMiner.view.graph.graphviz.DotNode;
 
 public class PMDotStartNode extends DotNode {
 	public PMDotStartNode() {

@@ -10,9 +10,9 @@
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>pmcep</groupId>
-	<artifactId>miner-backend</artifactId>
-	<version>0.0.2</version>
+	<groupId>beamline</groupId>
+	<artifactId>basic-miners</artifactId>
+	<version>0.0.3</version>
 
 	<properties>
 		<maven.compiler.source>11</maven.compiler.source>
@@ -21,17 +21,17 @@
 	
 	<repositories>
 		<repository>
-			<id>pmcep</id>
+			<id>beamline</id>
 			<name></name>
-			<url>https://dl.bintray.com/delas/pmcep</url>
+			<url>https://dl.bintray.com/delas/beamline</url>
 		</repository>
 	</repositories>
 	
 	<dependencies>
 		<dependency>
-			<groupId>pmcep</groupId>
-			<artifactId>miner-core</artifactId>
-			<version>0.0.8</version>
+			<groupId>beamline</groupId>
+			<artifactId>core</artifactId>
+			<version>0.0.10</version>
 		</dependency>
 		<dependency>
 			<groupId>com.azure</groupId>

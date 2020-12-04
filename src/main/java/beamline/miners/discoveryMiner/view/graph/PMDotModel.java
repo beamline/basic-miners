@@ -1,4 +1,4 @@
-package pmcep.miners.discoveryMiner.view.graph;
+package beamline.miners.discoveryMiner.view.graph;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,9 +8,9 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import pmcep.miners.discoveryMiner.ProcessMap;
-import pmcep.miners.discoveryMiner.view.graph.graphviz.Dot;
-import pmcep.miners.discoveryMiner.view.graph.graphviz.DotNode;
+import beamline.miners.discoveryMiner.ProcessMap;
+import beamline.miners.discoveryMiner.view.graph.graphviz.Dot;
+import beamline.miners.discoveryMiner.view.graph.graphviz.DotNode;
 
 
 /**
