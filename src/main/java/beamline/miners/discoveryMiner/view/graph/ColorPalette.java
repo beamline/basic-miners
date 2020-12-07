@@ -38,6 +38,10 @@ public class ColorPalette {
 		float rOwn = (float) (rMin + (rMax - rMin) * value);
 		float gOwn = (float) (gMin + (gMax - gMin) * value);
 		float bOwn = (float) (bMin + (bMax - bMin) * value);
+		
+		rOwn = (rOwn > 1f)? 1 : (rOwn < 0? 0 : rOwn);
+		gOwn = (gOwn > 1f)? 1 : (gOwn < 0? 0 : gOwn);
+		bOwn = (bOwn > 1f)? 1 : (bOwn < 0? 0 : bOwn);
 
 		return new Color(rOwn, gOwn, bOwn);
 	}
