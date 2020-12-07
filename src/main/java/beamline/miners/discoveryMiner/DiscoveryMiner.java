@@ -20,7 +20,7 @@ import beamline.core.web.miner.models.MinerView.Type;
 	description = "This miner discovers the activity flow",
 	configurationParameters = { },
 	viewParameters = {
-		@ExposedMinerParameter(name = "threshold", type = MinerParameter.Type.RANGE_0_1)
+		@ExposedMinerParameter(name = "Dependency threshold", type = MinerParameter.Type.RANGE_0_1)
 	})
 public class DiscoveryMiner extends AbstractMiner {
 
@@ -33,36 +33,10 @@ public class DiscoveryMiner extends AbstractMiner {
 	private Double maxRelationsFreq = Double.MIN_VALUE;
 
 	@Override
-	public void configure(Collection<MinerParameterValue> collection) {
-
-	}
+	public void configure(Collection<MinerParameterValue> collection) { }
 
 	@Override
 	public void consumeEvent(String caseID, String activityName) {
-		process(caseID, activityName);
-
-	}
-
-	@Override
-	public List<MinerView> getViews(Collection<MinerParameterValue> collection) {
-		Double threshold = 0d;
-		for (MinerParameterValue parameterValue : collection) {
-			if (parameterValue.getName().equals("threshold")) {
-				threshold = Double.valueOf(String.valueOf(parameterValue.getValue())) / 100d;
-			}
-		}
-		ProcessMap processMap = mine(threshold);
-
-		List<MinerView> views = new ArrayList<>();
-		views.add(new MinerView("Graphical ", new PMDotModel(processMap, ColorPalette.Colors.BLUE).toString(),
-				Type.GRAPHVIZ));
-
-		views.add(new MinerView("Textual", texturalRepresentation(processMap), Type.RAW));
-		return views;
-
-	}
-
-	public void process(String caseId, String activityName) {
 		Double activityFreq = 1d;
 		if (activities.containsKey(activityName)) {
 			activityFreq += activities.get(activityName);
@@ -70,8 +44,8 @@ public class DiscoveryMiner extends AbstractMiner {
 		}
 		activities.put(activityName, activityFreq);
 
-		if (latestActivityInCase.containsKey(caseId)) {
-			Pair<String, String> relation = new ImmutablePair<String, String>(latestActivityInCase.get(caseId),
+		if (latestActivityInCase.containsKey(caseID)) {
+			Pair<String, String> relation = new ImmutablePair<String, String>(latestActivityInCase.get(caseID),
 					activityName);
 			Double relationFreq = 1d;
 			if (relations.containsKey(relation)) {
@@ -80,7 +54,24 @@ public class DiscoveryMiner extends AbstractMiner {
 			}
 			relations.put(relation, relationFreq);
 		}
-		latestActivityInCase.put(caseId, activityName);
+		latestActivityInCase.put(caseID, activityName);
+	}
+
+	@Override
+	public List<MinerView> getViews(Collection<MinerParameterValue> collection) {
+		Double threshold = 0d;
+		for (MinerParameterValue parameterValue : collection) {
+			if (parameterValue.getName().equals("Dependency threshold")) {
+				threshold = Double.valueOf(String.valueOf(parameterValue.getValue()));
+			}
+		}
+		ProcessMap processMap = mine(threshold);
+
+		List<MinerView> views = new ArrayList<>();
+		views.add(new MinerView("Graphical ", new PMDotModel(processMap, ColorPalette.Colors.BLUE).toString(), Type.GRAPHVIZ));
+		views.add(new MinerView("Textual", texturalRepresentation(processMap), Type.RAW));
+		return views;
+
 	}
 
 	public ProcessMap mine(double threshold) {
@@ -90,9 +81,7 @@ public class DiscoveryMiner extends AbstractMiner {
 		}
 		for (Pair<String, String> relation : relations.keySet()) {
 			double dependency = relations.get(relation) / maxRelationsFreq;
-
 			if (dependency >= threshold) {
-
 				process.addRelation(relation.getLeft(), relation.getRight(), dependency);
 			}
 		}
