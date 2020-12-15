@@ -34,7 +34,7 @@ import beamline.miners.recorder.XLogHelper;
 public class LiveVisualizer extends AbstractMiner {
 
 	private Integer minutesToStore;
-	LinkedList<XEvent> eventList = new LinkedList<>();
+	private LinkedList<XEvent> eventList = new LinkedList<>();
 
 	@Override
 	public void configure(Collection<MinerParameterValue> collection) {
@@ -57,17 +57,15 @@ public class LiveVisualizer extends AbstractMiner {
 	public List<MinerView> getViews(Collection<MinerParameterValue> collection) {
 		List<MinerView> views = new ArrayList<>();
 		List<Object> headersTable = Arrays.asList("Cases", "Activity", "Timestamp");
-		List<Object> headersBarChart = Arrays.asList("CaseId", "Freq");
+		List<Object> headersBarChartEventsCases = Arrays.asList("Case ID", "Frequency");
+		List<Object> headersBarChartActivities = Arrays.asList("Activity", "Frequency");
 
-		Map<String, Object> options = new HashMap<>() {
-			{
-				put("title", "Live Stream");
-				put("subtitle", "Events received the last " + minutesToStore + " minutes");
-			}
-		};
+		Map<String, Object> options = new HashMap<String, Object>();
+		options.put("title", "Live Stream");
 
-		views.add(new MinerViewGoogle("Table view", headersTable, fillTable(), options, MinerViewGoogle.TYPE.Table));
-		views.add(new MinerViewGoogle("Bar view", headersBarChart, fillBarChart(), options, MinerViewGoogle.TYPE.BarChart));
+		views.add(new MinerViewGoogle("List of events", headersTable, fillTable(), options, MinerViewGoogle.TYPE.Table));
+		views.add(new MinerViewGoogle("Events per cases", headersBarChartEventsCases, fillBarChartEventsCases(), options, MinerViewGoogle.TYPE.BarChart));
+		views.add(new MinerViewGoogle("Activities", headersBarChartActivities, fillBarChartActivities(), options, MinerViewGoogle.TYPE.BarChart));
 
 		return views;
 	}
@@ -93,12 +91,13 @@ public class LiveVisualizer extends AbstractMiner {
 			values.add(Arrays.asList(
 					event.getAttributes().get("concept:caseId").toString(),
 					event.getAttributes().get("concept:name").toString(),
-					event.getAttributes().get("time:timestamp").toString()));
+					event.getAttributes().get("time:timestamp").toString()
+					));
 		}
 		return values;
 	}
 
-	public List<List<Object>> fillBarChart() {
+	public List<List<Object>> fillBarChartEventsCases() {
 		Map<String, Integer> freqMap = new HashMap<>();
 		for (XEvent event : eventList) {
 			String caseID = event.getAttributes().get("concept:caseId").toString();
@@ -115,6 +114,24 @@ public class LiveVisualizer extends AbstractMiner {
 		return values;
 	}
 
+	public List<List<Object>> fillBarChartActivities() {
+		Map<String, Integer> freqMap = new HashMap<>();
+		for (XEvent event : eventList) {
+			String caseID = event.getAttributes().get("concept:name").toString();
+			if (freqMap.containsKey(caseID)) {
+				freqMap.put(caseID, freqMap.get(caseID) + 1);
+			} else {
+				freqMap.put(caseID, 1);
+			}
+		}
+		List<List<Object>> values = new ArrayList<>();
+		for (Map.Entry<String, Integer> entry : freqMap.entrySet()) {
+			values.add(Arrays.asList(entry.getKey(), entry.getValue()));
+		}
+		return values;
+	}
+
+	@SuppressWarnings("unchecked")
 	public String convertToJson() {
 		JSONObject responseDetailsJson = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
