@@ -2,7 +2,7 @@ package beamline.miners.discoveryMiner.view.graph;
 
 import java.awt.Color;
 
-import beamline.miners.discoveryMiner.view.graph.graphviz.DotNode;
+import beamline.graphviz.DotNode;
 
 public class PMDotNode extends DotNode {
 

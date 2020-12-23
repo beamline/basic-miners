@@ -8,9 +8,9 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import beamline.graphviz.Dot;
+import beamline.graphviz.DotNode;
 import beamline.miners.discoveryMiner.ProcessMap;
-import beamline.miners.discoveryMiner.view.graph.graphviz.Dot;
-import beamline.miners.discoveryMiner.view.graph.graphviz.DotNode;
 
 
 /**

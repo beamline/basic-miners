@@ -1,7 +1,7 @@
 package beamline.miners.discoveryMiner.view.graph;
 
-import beamline.miners.discoveryMiner.view.graph.graphviz.DotEdge;
-import beamline.miners.discoveryMiner.view.graph.graphviz.DotNode;
+import beamline.graphviz.DotEdge;
+import beamline.graphviz.DotNode;
 
 public class PMDotEdge extends DotEdge {
 

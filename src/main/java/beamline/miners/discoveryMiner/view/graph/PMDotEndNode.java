@@ -1,6 +1,6 @@
 package beamline.miners.discoveryMiner.view.graph;
 
-import beamline.miners.discoveryMiner.view.graph.graphviz.DotNode;
+import beamline.graphviz.DotNode;
 
 public class PMDotEndNode extends DotNode {
 	public PMDotEndNode() {
