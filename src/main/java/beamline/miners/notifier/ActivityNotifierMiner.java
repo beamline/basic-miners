@@ -16,7 +16,7 @@ import beamline.core.miner.AbstractMiner;
 	name = "Activity notifier",
 	description = "Miner that notifies when some activities are performed",
 	configurationParameters = {
-		@ExposedMinerParameter(name = "Activity name", type = Type.STRING)
+		@ExposedMinerParameter(name = "Activity name", type = Type.STRING, defaultValue = "")
 	},
 	viewParameters = {})
 public class ActivityNotifierMiner extends AbstractMiner {

@@ -20,7 +20,7 @@ import beamline.core.web.miner.models.MinerView.Type;
 	description = "This miner discovers the activity flow",
 	configurationParameters = { },
 	viewParameters = {
-		@ExposedMinerParameter(name = "Dependency threshold", type = MinerParameter.Type.RANGE_0_1)
+		@ExposedMinerParameter(name = "Dependency threshold", type = MinerParameter.Type.RANGE_0_1, defaultValue = "0.5")
 	})
 public class DiscoveryMiner extends AbstractMiner {
 

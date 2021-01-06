@@ -28,7 +28,7 @@ import beamline.miners.recorder.XLogHelper;
 	name = "Live Visualizer",
 	description = "Miner that shows a live feed of incoming stream",
 	configurationParameters = {
-		@ExposedMinerParameter(name = "Time window duration (min)", type = beamline.core.web.miner.models.MinerParameter.Type.INTEGER)
+		@ExposedMinerParameter(name = "Time window duration (min)", type = beamline.core.web.miner.models.MinerParameter.Type.INTEGER, defaultValue = "10")
 	},
 	viewParameters = {})
 public class LiveVisualizer extends AbstractMiner {
