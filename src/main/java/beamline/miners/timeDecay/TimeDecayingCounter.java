@@ -33,7 +33,7 @@ public class TimeDecayingCounter {
 		long now = getNow();
 		long elapsed = now - last_t;
 		if (elapsed >= 0) {
-			System.out.println("GET - heat = " + heat + "; alpha = " + alpha + "; elapsed = " + elapsed);
+//			System.out.println("GET - heat = " + heat + "; alpha = " + alpha + "; elapsed = " + elapsed);
 			return heat * Math.pow(alpha, elapsed);
 		}
 		return -1d;
