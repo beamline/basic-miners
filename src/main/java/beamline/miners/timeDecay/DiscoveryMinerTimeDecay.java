@@ -1,6 +1,7 @@
 package beamline.miners.timeDecay;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -21,7 +22,8 @@ import beamline.core.web.miner.models.MinerView.Type;
 	description = "This miner discovers the activity flow",
 	configurationParameters = {
 		@ExposedMinerParameter(name = "Alpha (base of exponential decay)", type = MinerParameter.Type.DOUBLE, defaultValue = "0.9999999"),
-		@ExposedMinerParameter(name = "Time granularity", type = MinerParameter.Type.CHOICE, defaultValue = "Seconds;Minutes;Hours;Days")
+		@ExposedMinerParameter(name = "Time granularity", type = MinerParameter.Type.CHOICE, defaultValue = "Seconds;Minutes;Hours;Days"),
+		@ExposedMinerParameter(name = "Max parallel instances", type = MinerParameter.Type.INTEGER, defaultValue = "100"),
 	},
 	viewParameters = {
 		@ExposedMinerParameter(name = "Relations threshold", type = MinerParameter.Type.RANGE_0_1, defaultValue = "0.5")
@@ -30,15 +32,19 @@ public class DiscoveryMinerTimeDecay extends AbstractMiner {
 
 	private double alpha;
 	private double divisor = 1000;
-	private Map<String, String> latestActivityInCase = new HashMap<String, String>();
-	private Map<Pair<String, String>, TimeDecayingCounter> relations = new HashMap<Pair<String, String>, TimeDecayingCounter>();
-	private Map<String, TimeDecayingCounter> activities = new HashMap<String, TimeDecayingCounter>();
+	private int maxParallelInstances = 100;
+	private Map<String, String> latestActivityInCase = null;
+	private Map<Pair<String, String>, TimeDecayingCounter> relations = null;
+	private Map<String, TimeDecayingCounter> activities = null;
 
 	@Override
 	public void configure(Collection<MinerParameterValue> collection) {
 		for(MinerParameterValue v : collection) {
 			if (v.getName().equals("Alpha (base of exponential decay)") && v.getType() == MinerParameter.Type.DOUBLE) {
 				alpha = Double.parseDouble(v.getValue().toString());
+			}
+			if (v.getName().equals("Max parallel instances") && v.getType() == MinerParameter.Type.INTEGER) {
+				maxParallelInstances = Integer.parseInt(v.getValue().toString());
 			}
 			if (v.getName().equals("Time granularity")) {
 				String value = v.getValue().toString();
@@ -53,6 +59,10 @@ public class DiscoveryMinerTimeDecay extends AbstractMiner {
 				}
 			}
 		}
+		
+		latestActivityInCase = new FifoHashMap<String, String>(maxParallelInstances);
+		relations = new ConcurrentHashMap<Pair<String, String>, TimeDecayingCounter>();
+		activities = new ConcurrentHashMap<String, TimeDecayingCounter>();
 	}
 
 	@Override
